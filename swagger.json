@@ -1,0 +1,1410 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Wathq E-Delegation API"
+  },
+  "host": "api.wathq.sa",
+  "basePath": "/v1/edelegation",
+  "tags": [
+    {
+      "name": "e-delegation",
+      "description": " "
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json",
+    "application/xml"
+  ],
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "name": "apiKey",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/delegacy/{id}/beneficiaries/{beneficiaryId}/{idtype}": {
+      "get": {
+        "tags": [
+          "e-delegation"
+        ],
+        "summary": "Retrieves all delegacy details",
+        "description": "Retrieves all delegacy details  - الاستعلام عن كافة بيانات التفويض الالكتروني",
+        "operationId": "delegacy",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "delegacy id  - رقم التفويض",
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 10
+          },
+          {
+            "name": "beneficiaryId",
+            "in": "path",
+            "required": true,
+            "description": "beneficiaryId id  - رقم هوية المفوَّض",
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          {
+            "name": "idtype",
+            "type": "string",
+            "in": "path",
+            "required": true,
+            "description": "identification type - نوع هوية المفوض:\n      * `nid` - citizen national ID  - هوية سعودية\n      * `iqama` - Iqama Number - هوية إقامة\n",
+            "enum": [
+              "nid",
+              "iqama"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/delegacy"
+            },
+            "headers": {
+              "THIQAH-API-ApiMsgRef": {
+                "type": "string",
+                "format": "uuid",
+                "description": "unique guid for each request"
+              },
+              "THIQAH-API-ClientMsgRef": {
+                "type": "string",
+                "format": "uuid",
+                "description": "The original client reference value sent in the request"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ErrorResponse400_delegate"
+          },
+          "401": {
+            "$ref": "#/responses/ErrorResponse401"
+          },
+          "403": {
+            "$ref": "#/responses/ErrorResponse403"
+          },
+          "404": {
+            "$ref": "#/responses/ErrorResponse404"
+          },
+          "429": {
+            "$ref": "#/responses/ErrorResponse429"
+          },
+          "500": {
+            "$ref": "#/responses/ErrorResponse500"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultErrorResponse"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/beneficiaries/{beneficiaryId}/{idtype}/delegacy": {
+      "get": {
+        "tags": [
+          "e-delegation"
+        ],
+        "summary": "Retrieves all delegates details for beneficiary",
+        "description": "Retrieves all delegates details for beneficiary - الاستعلام عن كافة بيانات التفاويض الالكترونية لمفوَّض:\n**Note**: either (delegatedReferenceId with delegatedReferencetype) is required  or (inquiryId with inquirytype) or (both of them)\n",
+        "operationId": "delegacies",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "beneficiaryId",
+            "in": "path",
+            "required": true,
+            "description": "beneficiaryId id  - رقم هوية المفوَّض",
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          {
+            "name": "idtype",
+            "type": "string",
+            "in": "path",
+            "required": true,
+            "description": "identification type - نوع هوية المفوض:\n      * `nid` - citizen national ID  - هوية سعودية\n      * `iqama` - Iqama Number - هوية إقامة\n",
+            "enum": [
+              "nid",
+              "iqama"
+            ]
+          },
+          {
+            "name": "delegatedReferenceId",
+            "in": "query",
+            "description": "refers to delegated on reference id    - رقم المرجع الخاص بالجهة المفوض عليها",
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          {
+            "name": "delegatedReferencetype",
+            "type": "string",
+            "in": "query",
+            "description": "refers to delegated on reference type -نوع المرجع الخاص بالجهة المفوض عليها:\n    * `crno` - commercial registration  - سجل تجاري\n    * `entityno` - entity number like 7XXXXXXXXX - الرقم الوطني الموحد\n    * `agency` - Agency  - الوكالة التجارية\n    * `trademark` - Trade mark- العلامة التجارية\n",
+            "enum": [
+              "crno",
+              "entityno",
+              "agency",
+              "trademark"
+            ]
+          },
+          {
+            "name": "inquiryId",
+            "in": "query",
+            "description": "inquiry id  - رمز الاستعلام",
+            "type": "string",
+            "maxLength": 50
+          },
+          {
+            "name": "inquirytype",
+            "type": "string",
+            "in": "query",
+            "description": "inquiry type - نوع الاستعلام:\n      * `role` - role  - صلاحية\n      * `system` - system  - خدمة\n",
+            "enum": [
+              "role",
+              "system"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/beneficiary"
+            },
+            "headers": {
+              "THIQAH-API-ApiMsgRef": {
+                "type": "string",
+                "format": "uuid",
+                "description": "unique guid for each request"
+              },
+              "THIQAH-API-ClientMsgRef": {
+                "type": "string",
+                "format": "uuid",
+                "description": "The original client reference value sent in the request"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ErrorResponse400_beneficiary"
+          },
+          "401": {
+            "$ref": "#/responses/ErrorResponse401"
+          },
+          "403": {
+            "$ref": "#/responses/ErrorResponse403"
+          },
+          "404": {
+            "$ref": "#/responses/ErrorResponse404"
+          },
+          "429": {
+            "$ref": "#/responses/ErrorResponse429"
+          },
+          "500": {
+            "$ref": "#/responses/ErrorResponse500"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultErrorResponse"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/delegatedreference/{delegatedReferenceId}/{delegatedReferencetype}/beneficiaries": {
+      "get": {
+        "tags": [
+          "e-delegation"
+        ],
+        "summary": "Retrieves all beneficiaries and delegates details for reference",
+        "description": "Retrieves all beneficiaries and  delegates details refers to delegated on reference id - الاستعلام عن كافة بيانات المفوضَّين والتفاويض الالكترونية المرتبطة بجهه مفوض عليها",
+        "operationId": "beneficiaries",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "delegatedReferenceId",
+            "in": "path",
+            "required": true,
+            "description": "refers to delegated on reference id    - رقم المرجع الخاص بالجهة المفوض عليها",
+            "type": "string",
+            "maxLength": 10
+          },
+          {
+            "name": "delegatedReferencetype",
+            "type": "string",
+            "required": true,
+            "in": "path",
+            "description": "refers to delegated on reference type -نوع المرجع الخاص بالجهة المفوض عليها:\n    * `crno` - commercial registration  - سجل تجاري\n    * `entityno` - entity number like 7XXXXXXXXX - الرقم الوطني الموحد\n    * `agency` - Agency  - الوكالة التجارية\n    * `trademark` - Trade mark- العلامة التجارية\n    \n",
+            "enum": [
+              "crno",
+              "entityno",
+              "agency",
+              "trademark"
+            ]
+          },
+          {
+            "name": "inquiryId",
+            "in": "query",
+            "required": true,
+            "description": "inquiry id  - رمز الاستعلام",
+            "type": "string",
+            "maxLength": 50
+          },
+          {
+            "name": "inquirytype",
+            "type": "string",
+            "required": true,
+            "in": "query",
+            "description": "inquiry type - نوع الاستعلام:\n      * `role` - role  - صلاحية\n      * `system` - system  - خدمة\n",
+            "enum": [
+              "role",
+              "system"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/beneficiaries"
+            },
+            "headers": {
+              "THIQAH-API-ApiMsgRef": {
+                "type": "string",
+                "format": "uuid",
+                "description": "unique guid for each request"
+              },
+              "THIQAH-API-ClientMsgRef": {
+                "type": "string",
+                "format": "uuid",
+                "description": "The original client reference value sent in the request"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ErrorResponse400_beneficiaries"
+          },
+          "401": {
+            "$ref": "#/responses/ErrorResponse401"
+          },
+          "403": {
+            "$ref": "#/responses/ErrorResponse403"
+          },
+          "404": {
+            "$ref": "#/responses/ErrorResponse404"
+          },
+          "429": {
+            "$ref": "#/responses/ErrorResponse429"
+          },
+          "500": {
+            "$ref": "#/responses/ErrorResponse500"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultErrorResponse"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/lookups": {
+      "get": {
+        "tags": [
+          "e-delegation lookup"
+        ],
+        "summary": "Retrieves all Organzation & System & Roles lookups",
+        "description": "Retrieves all Organzation & System &  Roles - الاستعلام عن كافة بيانات الجهات والخدمات والصلاجيات",
+        "operationId": "lookups",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/lookups"
+            },
+            "headers": {
+              "THIQAH-API-ApiMsgRef": {
+                "type": "string",
+                "format": "uuid",
+                "description": "unique guid for each request"
+              },
+              "THIQAH-API-ClientMsgRef": {
+                "type": "string",
+                "format": "uuid",
+                "description": "The original client reference value sent in the request"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ErrorResponse400_lookups"
+          },
+          "401": {
+            "$ref": "#/responses/ErrorResponse401"
+          },
+          "403": {
+            "$ref": "#/responses/ErrorResponse403"
+          },
+          "404": {
+            "$ref": "#/responses/ErrorResponse404"
+          },
+          "429": {
+            "$ref": "#/responses/ErrorResponse429"
+          },
+          "500": {
+            "$ref": "#/responses/ErrorResponse500"
+          },
+          "default": {
+            "$ref": "#/responses/DefaultErrorResponse"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message",
+        "referenceid"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 10
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "delegacy": {
+      "type": "object",
+      "required": [
+        "id",
+        "startDate",
+        "expiryDate",
+        "organization",
+        "beneficiary"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 5,
+          "example": 12456,
+          "description": "delegacy id - رقم التفويض"
+        },
+        "startDate": {
+          "type": "string",
+          "pattern": "yyyy/mm/dd",
+          "description": "delegacy start Date - تاريخ بداية التفويض",
+          "example": "2021/08/10"
+        },
+        "expiryDate": {
+          "type": "string",
+          "pattern": "yyyy/mm/dd",
+          "description": "delegacy expiry Date - تاريخ انتهاء التفويض",
+          "example": "2021/08/10"
+        },
+        "href": {
+          "type": "string",
+          "description": "The full URL of the resource - الرابط الخاص بالتفويض",
+          "example": "https://api.wathq.sa/v1/edelegation/delegacy/12345/beneficiaries/1006XXXX47/nid"
+        },
+        "beneficiary": {
+          "type": "object",
+          "description": "beneficiary details - بيانات المفوَِّض",
+          "required": [
+            "name",
+            "identity"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "beneficiary Arabic name - أسم المفوَّض عربي",
+              "maxLength": 150,
+              "example": "علي محمد XXXXXXX"
+            },
+            "nameEn": {
+              "type": "string",
+              "description": "beneficiary English name - أسم المفوَّض انجليزي",
+              "maxLength": 150,
+              "example": "Ali Mohammed XXXXXXX"
+            },
+            "birthDate": {
+              "type": "string",
+              "pattern": "yyyy/mm/dd",
+              "description": "birth gregorian date  - تاريخ الميلاد بالميلادي",
+              "example": "XXXX/05/10"
+            },
+            "identity": {
+              "type": "object",
+              "description": "identitifcation details  - بيانات هوية المفوض",
+              "required": [
+                "id",
+                "type"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "maxLength": 20,
+                  "example": "1006XXXX47"
+                },
+                "type": {
+                  "type": "string",
+                  "maxLength": 20,
+                  "enum": [
+                    "nid",
+                    "iqama"
+                  ],
+                  "description": "id Type:\n  * `nid` - citizen national ID  - هوية سعودية\n  * `iqama` - Iqama Number - هوية إقامة\n",
+                  "example": "nid"
+                }
+              }
+            },
+            "nationality": {
+              "type": "object",
+              "description": "party nationality details - تفاصيل جنسية الطرف",
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "description": "iso alpha2 country code find in Link https://www.iso.org/home.html",
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 2,
+                  "example": "SA"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 50,
+                  "example": "saudi arabia"
+                }
+              }
+            }
+          }
+        },
+        "organization": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "nameEn",
+              "system"
+            ],
+            "properties": {
+              "id": {
+                "type": "number",
+                "maxLength": 10,
+                "description": "organization id - رمز الجهة",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "description": "organization Arabic name  - اسم الجهة عربي",
+                "example": "وزارة التجارة"
+              },
+              "nameEn": {
+                "type": "string",
+                "description": "organization English name  - اسم الجهة انجليزي",
+                "example": "Ministry of Commerce"
+              },
+              "system": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "name",
+                    "nameEn",
+                    "role"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "maxLength": 30,
+                      "description": "system id - رمز الخدمة",
+                      "example": "47f5e9e6-2c8c-497f-8d76-9ca8a638c681"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "system Arabic name  - اسم الخدمة بالعربي",
+                      "example": "السجل التجاري"
+                    },
+                    "nameEn": {
+                      "type": "string",
+                      "description": "system English name  - اسم الخدمة انجليزي",
+                      "example": "Commercail Register"
+                    },
+                    "role": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name",
+                          "nameEn",
+                          "role"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "maxLength": 30,
+                            "description": "organization id - رمز الجهة",
+                            "example": "0B21E5B2-DE0D-4D99-9979-F49F7FD29C6E"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "organization Arabic name  - اسم الصلاحية عربي",
+                            "example": "إصدار سجل تجاري"
+                          },
+                          "nameEn": {
+                            "type": "string",
+                            "description": "organization English name  - اسم الصلاحية",
+                            "example": "Issuing Commercial Register"
+                          },
+                          "delegatedReferenceId": {
+                            "type": "string",
+                            "description": "refers to delegated on reference id    - رقم المرجع الخاص بالجهة المفوض عليها",
+                            "example": 1010101010
+                          },
+                          "delegatedReferenceType": {
+                            "type": "string",
+                            "description": "refers to delegated on reference type -نوع المرجع الخاص بالجهة المفوض عليها:\n    * `crno` - commercial registration  - سجل تجاري\n    * `entityno` - entity number like 7XXXXXXXXX - الرقم الوطني الموحد\n    * `agency` - Agency  - الوكالة التجارية\n    * `trademark` - Trade mark- العلامة التجارية\n",
+                            "example": "crno"
+                          },
+                          "mainDelegatedReferenceId": {
+                            "type": "string",
+                            "description": "refers to main delegated reference id    - رقم المرجع االرئيسي الخاص  بالجهة المفوض عليها",
+                            "example": null
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "beneficiary": {
+      "type": "object",
+      "required": [
+        "name",
+        "identity",
+        "delegacy"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "beneficiary Arabic name - أسم المفوَّض عربي",
+          "maxLength": 150,
+          "example": "علي محمد XXXXXXX"
+        },
+        "nameEn": {
+          "type": "string",
+          "description": "beneficiary English name - أسم المفوَّض انجليزي",
+          "maxLength": 150,
+          "example": "Ali Mohammed XXXXXXX"
+        },
+        "birthDate": {
+          "type": "string",
+          "pattern": "yyyy/mm/dd",
+          "description": "birth gregorian date  - تاريخ الميلاد بالميلادي",
+          "example": "XXXX/05/10"
+        },
+        "identity": {
+          "type": "object",
+          "description": "identitifcation details  - بيانات هوية المفوض",
+          "required": [
+            "id",
+            "type"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "maxLength": 20,
+              "example": "1006XXXX47"
+            },
+            "type": {
+              "type": "string",
+              "maxLength": 20,
+              "enum": [
+                "nid",
+                "iqama"
+              ],
+              "description": "id Type:\n  * `nid` - citizen national ID  - هوية سعودية\n  * `iqama` - Iqama Number - هوية إقامة\n",
+              "example": "nid"
+            }
+          }
+        },
+        "nationality": {
+          "type": "object",
+          "description": "party nationality details - تفاصيل جنسية الطرف",
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "description": "iso alpha2 country code find in Link https://www.iso.org/home.html",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2,
+              "example": "SA"
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 50,
+              "example": "saudi arabia"
+            }
+          }
+        },
+        "delegacy": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "startDate",
+              "expiryDate",
+              "organization"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 5,
+                "example": 12456,
+                "description": "delegacy id - رقم التفويض"
+              },
+              "startDate": {
+                "type": "string",
+                "pattern": "yyyy/mm/dd",
+                "description": "delegacy start Date - تاريخ بداية التفويض",
+                "example": "2021/08/10"
+              },
+              "expiryDate": {
+                "type": "string",
+                "pattern": "yyyy/mm/dd",
+                "description": "delegacy expiry Date - تاريخ انتهاء التفويض",
+                "example": "2021/08/10"
+              },
+              "href": {
+                "type": "string",
+                "description": "The full URL of the resource - الرابط الخاص بالتفويض",
+                "example": "https://api.wathq.sa/v1/edelegation/delegacy/12345/beneficiaries/1006XXXX47/nid"
+              },
+              "organization": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "name",
+                    "nameEn",
+                    "system"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "maxLength": 10,
+                      "description": "organization id - رمز الجهة",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "organization Arabic name  - اسم الجهة عربي",
+                      "example": "وزارة التجارة"
+                    },
+                    "nameEn": {
+                      "type": "string",
+                      "description": "organization English name  - اسم الجهة انجليزي",
+                      "example": "Ministry of Commerce"
+                    },
+                    "system": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name",
+                          "nameEn",
+                          "role"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "maxLength": 30,
+                            "description": "system id - رمز الخدمة",
+                            "example": "47f5e9e6-2c8c-497f-8d76-9ca8a638c681"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "system Arabic name  - اسم الخدمة بالعربي",
+                            "example": "السجل التجاري"
+                          },
+                          "nameEn": {
+                            "type": "string",
+                            "description": "system English name  - اسم الخدمة انجليزي",
+                            "example": "Commercail Register"
+                          },
+                          "role": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "name",
+                                "nameEn",
+                                "role"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "maxLength": 30,
+                                  "description": "role id - رمز الصلاحية",
+                                  "example": "0B21E5B2-DE0D-4D99-9979-F49F7FD29C6E"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "role Arabic name  - اسم الصلاحية عربي",
+                                  "example": "إصدار سجل تجاري"
+                                },
+                                "nameEn": {
+                                  "type": "string",
+                                  "description": "role English name  - اسم الصلاحية انجليزي",
+                                  "example": "Issuing Commercial Register"
+                                },
+                                "delegatedReferenceId": {
+                                  "type": "string",
+                                  "description": "refers to delegated on reference id    - رقم المرجع الخاص بالجهة المفوض عليها",
+                                  "example": 1010101010
+                                },
+                                "delegatedReferenceType": {
+                                  "type": "string",
+                                  "description": "refers to delegated on reference type -نوع المرجع الخاص بالجهة المفوض عليها:\n    * `crno` - commercial registration  - سجل تجاري\n    * `agency` - Agency  - الوكالة التجارية\n    * `trademark` - Trade mark- العلامة التجارية\n",
+                                  "example": "crno"
+                                },
+                                "mainDelegatedReferenceId": {
+                                  "type": "string",
+                                  "description": "refers to main delegated reference id    - رقم المرجع االرئيسي الخاص  بالجهة المفوض عليها",
+                                  "example": null
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "beneficiaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "identity",
+          "delegacy"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "beneficiary Arabic name - أسم المفوَّض عربي",
+            "maxLength": 150,
+            "example": "علي محمد XXXXXXX"
+          },
+          "nameEn": {
+            "type": "string",
+            "description": "beneficiary English name - أسم المفوَّض انجليزي",
+            "maxLength": 150,
+            "example": "Ali Mohammed XXXXXXX"
+          },
+          "birthDate": {
+            "type": "string",
+            "pattern": "yyyy/mm/dd",
+            "description": "birth gregorian date  - تاريخ الميلاد بالميلادي",
+            "example": "XXXX/05/10"
+          },
+          "identity": {
+            "type": "object",
+            "description": "identitifcation details  - بيانات هوية المفوض",
+            "required": [
+              "id",
+              "type"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 20,
+                "example": "1006XXXX47"
+              },
+              "type": {
+                "type": "string",
+                "maxLength": 20,
+                "enum": [
+                  "nid",
+                  "iqama"
+                ],
+                "description": "id Type:\n  * `nid` - citizen national ID  - هوية سعودية\n  * `iqama` - Iqama Number - هوية إقامة\n",
+                "example": "nid"
+              }
+            }
+          },
+          "nationality": {
+            "type": "object",
+            "description": "party nationality details - تفاصيل جنسية الطرف",
+            "required": [
+              "id",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "description": "iso alpha2 country code find in Link https://www.iso.org/home.html",
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2,
+                "example": "SA"
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 50,
+                "example": "saudi arabia"
+              }
+            }
+          },
+          "delegacy": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "startDate",
+                "expiryDate",
+                "organization"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "maxLength": 5,
+                  "example": 12456,
+                  "description": "delegacy id - رقم التفويض"
+                },
+                "startDate": {
+                  "type": "string",
+                  "pattern": "yyyy/mm/dd",
+                  "description": "delegacy start Date - تاريخ بداية التفويض",
+                  "example": "2021/08/10"
+                },
+                "expiryDate": {
+                  "type": "string",
+                  "pattern": "yyyy/mm/dd",
+                  "description": "delegacy expiry Date - تاريخ انتهاء التفويض",
+                  "example": "2021/08/10"
+                },
+                "href": {
+                  "type": "string",
+                  "description": "The full URL of the resource - الرابط الخاص بالتفويض",
+                  "example": "https://api.wathq.sa/v1/edelegation/delegacy/12345/beneficiaries/1006XXXX47/nid"
+                },
+                "organization": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "name",
+                      "nameEn",
+                      "system"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "maxLength": 10,
+                        "description": "organization id - رمز الجهة",
+                        "example": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "organization Arabic name  - اسم الجهة عربي",
+                        "maxLength": 30,
+                        "example": "وزارة التجارة"
+                      },
+                      "nameEn": {
+                        "type": "string",
+                        "description": "organization English name  - اسم الجهة انجليزي",
+                        "maxLength": 30,
+                        "example": "Ministry of Commerce"
+                      },
+                      "system": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "name",
+                            "nameEn",
+                            "role"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "maxLength": 30,
+                              "description": "system id - رمز الخدمة",
+                              "example": "47f5e9e6-2c8c-497f-8d76-9ca8a638c681"
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "system Arabic name  - اسم الخدمة بالعربي",
+                              "example": "السجل التجاري"
+                            },
+                            "nameEn": {
+                              "type": "string",
+                              "description": "system English name  - اسم الخدمة انجليزي",
+                              "example": "Commercail Register"
+                            },
+                            "role": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "name",
+                                  "nameEn",
+                                  "role"
+                                ],
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "maxLength": 30,
+                                    "description": "role id - رمز الصلاحية",
+                                    "example": "0B21E5B2-DE0D-4D99-9979-F49F7FD29C6E"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "description": "role Arabic name  - اسم الصلاحية عربي",
+                                    "example": "إصدار سجل تجاري"
+                                  },
+                                  "nameEn": {
+                                    "type": "string",
+                                    "description": "organization English name  - اسم الصلاحية انجليزي",
+                                    "example": "Issuing Commercial Register"
+                                  },
+                                  "delegatedReferenceId": {
+                                    "type": "string",
+                                    "description": "refers to delegated on reference id    - رقم المرجع الخاص بالجهة المفوض عليها",
+                                    "example": 1010101010
+                                  },
+                                  "delegatedReferenceType": {
+                                    "type": "string",
+                                    "description": "refers to delegated on reference type -نوع المرجع الخاص بالجهة المفوض عليها:\n    * `crno` - commercial registration  - سجل تجاري\n    * `entityno` - entity number like 7XXXXXXXXX - الرقم الوطني الموحد\n    * `agency` - Agency  - الوكالة التجارية\n    * `trademark` - Trade mark- العلامة التجارية\n",
+                                    "example": "crno"
+                                  },
+                                  "mainDelegatedReferenceId": {
+                                    "type": "string",
+                                    "description": "refers to main delegated reference id    - رقم المرجع االرئيسي الخاص  بالجهة المفوض عليها",
+                                    "example": null
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "lookups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "nameEn",
+          "system"
+        ],
+        "properties": {
+          "id": {
+            "type": "number",
+            "maxLength": 10,
+            "description": "organization id - رقم الجهة",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "organization Arabic name  - اسم الجهة عربي",
+            "maxLength": 30,
+            "example": "وزارة التجارة"
+          },
+          "nameEn": {
+            "type": "string",
+            "description": "organization English name  - اسم الجهة انجليزي",
+            "maxLength": 30,
+            "example": "Ministry of Commerce"
+          },
+          "system": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "nameEn",
+                "role"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "maxLength": 30,
+                  "description": "system id - رمز الخدمة",
+                  "example": "47f5e9e6-2c8c-497f-8d76-9ca8a638c681"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "system Arabic name  - اسم الخدمة بالعربي",
+                  "example": "السجل التجاري"
+                },
+                "nameEn": {
+                  "type": "string",
+                  "description": "system English name  - اسم الخدمة انجليزي",
+                  "example": "Commercail Register"
+                },
+                "role": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "name",
+                      "nameEn",
+                      "role"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "maxLength": 30,
+                        "description": "organization id - رمز الصلاحية",
+                        "example": "0B21E5B2-DE0D-4D99-9979-F49F7FD29C6E"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "role Arabic name  - اسم الصلاحية عربي",
+                        "example": "إصدار سجل تجاري"
+                      },
+                      "nameEn": {
+                        "type": "string",
+                        "description": "role English name  - اسم الصلاحية انجليزي",
+                        "example": "Issuing Commercial Register"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "DefaultErrorResponse": {
+      "headers": {
+        "THIQAH-API-ApiMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique guid for each request"
+        },
+        "THIQAH-API-ClientMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The original client reference value sent in the request"
+        }
+      },
+      "description": "Supported HTTP Status Codes 400, 401, 403, 404, 409, 429, 500, 502, 503, 504 <br /><br /> 400 Bad Request - Will be returned for any data processing errors which API consumer should correct.<br /> 401 Unauthorized - Authentication errors. Credentials provided are not valid or expired.<br /> 403 Forbidden - Authorization error. Credentials are valid, but insufficient privileges or scope.<br /> 404 Not Found - Resource/verb combination is not found. <br /> 409 Conflict - The operation is creating a conflict in the resource status<br /> 500 Internal Server Error - Internal errors within the API provider and its backends<br /> 502 Bad Gateway - The backend application provider did not provide a valid undestandable response<br /> 503 Service Unavailable - API resource is not available for use and/or one of the backend providers is not available.<br /> 504 Gateway Timeout - The backend application provider did not provide a response within the Standard timeout window.<br />\n",
+      "schema": {
+        "$ref": "#/definitions/error"
+      }
+    },
+    "ErrorResponse400_delegate": {
+      "description": "**business error , Here is listed of code** :\n\n  code: 400.2.3  - message: Input data is required\n  code: 400.2.19 - message: Wrong Beneficiary Identity Type \n  code: 400.2.25 - message: delegacy ID must be more than 2 digits\n  code: 400.2.26 - message: beneficiary id must be 10 digits only\n  code: 400.2.27 - message: beneficiary id must be in valid format\n  code: 400.2.32 - message: delegacy is expired\n",
+      "headers": {
+        "THIQAH-API-ApiMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique guid for each request"
+        },
+        "THIQAH-API-ClientMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The original client reference value sent in the request"
+        }
+      },
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "examples": {
+        "application/json": {
+          "code": "400.2.32",
+          "message": "delegacy is expired"
+        },
+        "application/xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <error>   <code>400.2.32</code>  <message>delegacy is expired</message>   </error>"
+      }
+    },
+    "ErrorResponse400_beneficiary": {
+      "description": "**business error , Here is listed of code** :\n\n  code: 400.2.19 - message: Wrong Beneficiary Identity Type\n  code: 400.2.26 - message: beneficiary id must be 10 digits only\n  code: 400.2.27 - message: beneficiary id must be in valid format\n  code: 400.2.28 - message: delegated reference id must be 10 digits only\n  code: 400.2.29 - message: Wrong Inquiry Type\n  code: 400.2.30 - message: Wrong Reference Type\n  code: 400.2.31 - message: Input data is required either [(delegatedReferenceId with delegatedReferencetype), (inquiryId with inquirytype) or (both of them)]\n",
+      "headers": {
+        "THIQAH-API-ApiMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique guid for each request"
+        },
+        "THIQAH-API-ClientMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The original client reference value sent in the request"
+        }
+      },
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "examples": {
+        "application/json": {
+          "code": "400.2.29",
+          "message": "Wrong Inquiry Type"
+        },
+        "application/xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <error>   <code>400.2.29</code>  <message>Wrong Inquiry Type</message>   </error>"
+      }
+    },
+    "ErrorResponse400_beneficiaries": {
+      "description": "**business error , Here is listed of code** :\n  code: 400.2.3  - message: Input data is required\n  code: 400.2.19 - message: Wrong Entity Type \n  code: 400.2.28 - message: delegated reference id must be 10 digits only\n  code: 400.2.29 - message: Wrong Inquiry Type\n  code: 400.2.30 - message: Wrong Reference Type  \n",
+      "headers": {
+        "THIQAH-API-ApiMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique guid for each request"
+        },
+        "THIQAH-API-ClientMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The original client reference value sent in the request"
+        }
+      },
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "examples": {
+        "application/json": {
+          "code": "400.2.27",
+          "message": "Wrong Reference Type"
+        },
+        "application/xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <error>   <code>400.2.27</code>  <message>Wrong Reference Type</message>   </error>"
+      }
+    },
+    "ErrorResponse400_lookups": {
+      "description": "**business error , Here is listed of code** :\n\n  code: 400.2.10  - message: Unable to Process the Request\n",
+      "headers": {
+        "THIQAH-API-ApiMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique guid for each request"
+        },
+        "THIQAH-API-ClientMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The original client reference value sent in the request"
+        }
+      },
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "examples": {
+        "application/json": {
+          "code": "400.2.10",
+          "message": "Unable to Process the Request"
+        },
+        "application/xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <error>   <code>400.2.10</code>  <message>Unable to Process the Request</message>   </error>"
+      }
+    },
+    "ErrorResponse401": {
+      "description": "unauthorized",
+      "headers": {
+        "THIQAH-API-ApiMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique guid for each request"
+        },
+        "THIQAH-API-ClientMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The original client reference value sent in the request"
+        }
+      },
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "examples": {
+        "application/json": {
+          "code": "401.1.1",
+          "message": "Invalid ApiKey"
+        },
+        "application/xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <error>   <code>401.1.1</code>  <message>Invalid ApiKey</message>   </error>"
+      }
+    },
+    "ErrorResponse403": {
+      "description": "unauthorized",
+      "headers": {
+        "THIQAH-API-ApiMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique guid for each request"
+        },
+        "THIQAH-API-ClientMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The original client reference value sent in the request"
+        }
+      },
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "examples": {
+        "application/json": {
+          "code": "403.1.1",
+          "message": "you do not have permission for giving resource"
+        },
+        "application/xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <error>   <code>403.1.1</code>  <message>you do not have permission for giving resource</message>   </error>"
+      }
+    },
+    "ErrorResponse404": {
+      "description": "not found",
+      "headers": {
+        "THIQAH-API-ApiMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique guid for each request"
+        },
+        "THIQAH-API-ClientMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The original client reference value sent in the request"
+        }
+      },
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "examples": {
+        "application/json": {
+          "code": "404.2.1",
+          "message": "No Results Found"
+        },
+        "application/xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <error>   <code>404.2.1</code>  <message>No Results Found</message>   </error>"
+      }
+    },
+    "ErrorResponse429": {
+      "description": "Quota Violation",
+      "headers": {
+        "THIQAH-API-ApiMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique guid for each request"
+        },
+        "THIQAH-API-ClientMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The original client reference value sent in the request"
+        }
+      },
+      "schema": {
+        "$ref": "#/definitions/error"
+      },
+      "examples": {
+        "application/json": {
+          "code": "429.1.1",
+          "message": "Rate limit quota violation. Quota limit  exceeded"
+        },
+        "application/xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <error>   <code>429.1.1</code>  <message>Rate limit quota violation. Quota limit  exceeded</message>   </error>"
+      }
+    },
+    "ErrorResponse500": {
+      "description": "internal server error",
+      "headers": {
+        "THIQAH-API-ApiMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique guid for each request"
+        },
+        "THIQAH-API-ClientMsgRef": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The original client reference value sent in the request"
+        }
+      },
+      "schema": {
+        "$ref": "#/definitions/error"
+      }
+    }
+  }
+}
