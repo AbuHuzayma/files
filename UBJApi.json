@@ -1,0 +1,3675 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "description": "Bill Manager APIs\n",
+    "version": "4.0.0",
+    "title": "Bill Manager APIs",
+    "contact": {
+      "email": "hahmadi@thiqah.sa"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://apim.dev.thiqah.sa/v4/billmanager"
+    },
+    {
+      "url": "https://payment.test.thiqah.sa/v4/billmanager"
+    },
+    {
+      "url": "https://api.staging.thiqah.sa/v4/billmanager"
+    }
+  ],
+  "paths": {
+    "/bills/cost-calculation": {
+      "post": {
+        "tags": [
+          "Bill"
+        ],
+        "summary": "calculates bill cost",
+        "parameters": [
+          {
+            "name": "ClientId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BillServicesInput"
+                },
+                "nullable": true
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BillServicesInput"
+                },
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BillServicesInput"
+                },
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BillServicesInput"
+                },
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalculateBillCostOutput"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalculateBillCostOutput"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalculateBillCostOutput"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bills/cancel": {
+      "post": {
+        "tags": [
+          "Bill"
+        ],
+        "summary": "cancels the unpaid bill and used only for Sadad payment method",
+        "parameters": [
+          {
+            "name": "ClientId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelBillInput"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelBillInput"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelBillInput"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelBillInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelBillOutput"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelBillOutput"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelBillOutput"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1004",
+                    "details": null,
+                    "message": "Bill is already paid",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1005",
+                    "details": null,
+                    "message": "Bill is already cancelled",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1006",
+                    "details": null,
+                    "message": "Bill is Expired",
+                    "validationErrors": null
+                  }
+                ]
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1004",
+                    "details": null,
+                    "message": "Bill is already paid",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1005",
+                    "details": null,
+                    "message": "Bill is already cancelled",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1006",
+                    "details": null,
+                    "message": "Bill is Expired",
+                    "validationErrors": null
+                  }
+                ]
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1004",
+                    "details": null,
+                    "message": "Bill is already paid",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1005",
+                    "details": null,
+                    "message": "Bill is already cancelled",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1006",
+                    "details": null,
+                    "message": "Bill is Expired",
+                    "validationErrors": null
+                  }
+                ]
+              }
+            }
+          },
+          "415": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bills": {
+      "post": {
+        "tags": [
+          "Bill"
+        ],
+        "summary": "creates bill with payment method directly and used only for offline payment",
+        "parameters": [
+          {
+            "name": "ClientId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillInput"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillInput"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillInput"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBillOutput"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBillOutput"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBillOutput"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1001",
+                    "details": null,
+                    "message": "Duplicate Application Bill Reference",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1002",
+                    "details": null,
+                    "message": "Duplicate Service Id",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1003",
+                    "details": null,
+                    "message": "Bill Amount is lower than the minimum amount",
+                    "validationErrors": null
+                  }
+                ]
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1001",
+                    "details": null,
+                    "message": "Duplicate Application Bill Reference",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1002",
+                    "details": null,
+                    "message": "Duplicate Service Id",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1003",
+                    "details": null,
+                    "message": "Bill Amount is lower than the minimum amount",
+                    "validationErrors": null
+                  }
+                ]
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1001",
+                    "details": null,
+                    "message": "Duplicate Application Bill Reference",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1002",
+                    "details": null,
+                    "message": "Duplicate Service Id",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1003",
+                    "details": null,
+                    "message": "Bill Amount is lower than the minimum amount",
+                    "validationErrors": null
+                  }
+                ]
+              }
+            }
+          },
+          "415": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bills/requests": {
+      "post": {
+        "tags": [
+          "Bill"
+        ],
+        "summary": "creates bill request without payment method to be paid by using the payment page",
+        "parameters": [
+          {
+            "name": "ClientId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillRequestInput"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillRequestInput"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillRequestInput"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillRequestInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBillRequestOutput"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBillRequestOutput"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBillRequestOutput"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1001",
+                    "details": null,
+                    "message": "Duplicate Application Bill Reference",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1002",
+                    "details": null,
+                    "message": "Duplicate Service Id",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1003",
+                    "details": null,
+                    "message": "Bill Amount is lower than the minimum amount",
+                    "validationErrors": null
+                  }
+                ]
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1001",
+                    "details": null,
+                    "message": "Duplicate Application Bill Reference",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1002",
+                    "details": null,
+                    "message": "Duplicate Service Id",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1003",
+                    "details": null,
+                    "message": "Bill Amount is lower than the minimum amount",
+                    "validationErrors": null
+                  }
+                ]
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1001",
+                    "details": null,
+                    "message": "Duplicate Application Bill Reference",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1002",
+                    "details": null,
+                    "message": "Duplicate Service Id",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1003",
+                    "details": null,
+                    "message": "Bill Amount is lower than the minimum amount",
+                    "validationErrors": null
+                  }
+                ]
+              }
+            }
+          },
+          "415": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bills/{applicationReference}": {
+      "get": {
+        "tags": [
+          "Bill"
+        ],
+        "summary": "retrieves bill information by application reference number",
+        "parameters": [
+          {
+            "name": "applicationReference",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "ClientId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBillDetailOutput"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBillDetailOutput"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBillDetailOutput"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bills/refund": {
+      "post": {
+        "tags": [
+          "Bill"
+        ],
+        "parameters": [
+          {
+            "name": "ClientId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundBillInput"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundBillInput"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundBillInput"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundBillInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundBillOutput"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundBillOutput"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundBillOutput"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1004",
+                    "details": null,
+                    "message": "Bill is already paid",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1005",
+                    "details": null,
+                    "message": "Bill is already cancelled",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1006",
+                    "details": null,
+                    "message": "Bill is Expired",
+                    "validationErrors": null
+                  }
+                ]
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1004",
+                    "details": null,
+                    "message": "Bill is already paid",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1005",
+                    "details": null,
+                    "message": "Bill is already cancelled",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1006",
+                    "details": null,
+                    "message": "Bill is Expired",
+                    "validationErrors": null
+                  }
+                ]
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1004",
+                    "details": null,
+                    "message": "Bill is already paid",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1005",
+                    "details": null,
+                    "message": "Bill is already cancelled",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1006",
+                    "details": null,
+                    "message": "Bill is Expired",
+                    "validationErrors": null
+                  }
+                ]
+              }
+            }
+          },
+          "415": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bills/requests/validation": {
+      "post": {
+        "tags": [
+          "Bill"
+        ],
+        "parameters": [
+          {
+            "name": "ClientId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationBillGenerationInput"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationBillGenerationInput"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationBillGenerationInput"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationBillGenerationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationBillGenerationOutput"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationBillGenerationOutput"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationBillGenerationOutput"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1001",
+                    "details": null,
+                    "message": "Duplicate Application Bill Reference",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1002",
+                    "details": null,
+                    "message": "Duplicate Service Id",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1003",
+                    "details": null,
+                    "message": "Bill Amount is lower than the minimum amount",
+                    "validationErrors": null
+                  }
+                ]
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1001",
+                    "details": null,
+                    "message": "Duplicate Application Bill Reference",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1002",
+                    "details": null,
+                    "message": "Duplicate Service Id",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1003",
+                    "details": null,
+                    "message": "Bill Amount is lower than the minimum amount",
+                    "validationErrors": null
+                  }
+                ]
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": [
+                  {
+                    "code": "BM_1001",
+                    "details": null,
+                    "message": "Duplicate Application Bill Reference",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1002",
+                    "details": null,
+                    "message": "Duplicate Service Id",
+                    "validationErrors": null
+                  },
+                  {
+                    "code": "BM_1003",
+                    "details": null,
+                    "message": "Bill Amount is lower than the minimum amount",
+                    "validationErrors": null
+                  }
+                ]
+              }
+            }
+          },
+          "415": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refunds": {
+      "put": {
+        "tags": [
+          "Refund"
+        ],
+        "parameters": [
+          {
+            "name": "ClientId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequestNotification"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequestNotification"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequestNotification"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequestNotification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCodes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ControllerInterfaceApiDescriptionModel": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "MethodParameterApiDescriptionModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeAsString": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeSimple": {
+            "type": "string",
+            "nullable": true
+          },
+          "isOptional": {
+            "type": "boolean"
+          },
+          "defaultValue": {
+            "type": "object",
+            "nullable": true
+          }
+        }
+      },
+      "ParameterApiDescriptionModel": {
+        "type": "object",
+        "properties": {
+          "nameOnMethod": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeSimple": {
+            "type": "string",
+            "nullable": true
+          },
+          "isOptional": {
+            "type": "boolean"
+          },
+          "defaultValue": {
+            "type": "object",
+            "nullable": true
+          },
+          "constraintTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "bindingSourceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "descriptorName": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ReturnValueApiDescriptionModel": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeSimple": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ActionApiDescriptionModel": {
+        "type": "object",
+        "properties": {
+          "uniqueName": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "httpMethod": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "supportedVersions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "parametersOnMethod": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MethodParameterApiDescriptionModel"
+            },
+            "nullable": true
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParameterApiDescriptionModel"
+            },
+            "nullable": true
+          },
+          "returnValue": {
+            "$ref": "#/components/schemas/ReturnValueApiDescriptionModel"
+          }
+        }
+      },
+      "ControllerApiDescriptionModel": {
+        "type": "object",
+        "properties": {
+          "controllerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "interfaces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ControllerInterfaceApiDescriptionModel"
+            },
+            "nullable": true
+          },
+          "actions": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ActionApiDescriptionModel"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ModuleApiDescriptionModel": {
+        "type": "object",
+        "properties": {
+          "rootPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "remoteServiceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "controllers": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ControllerApiDescriptionModel"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "PropertyApiDescriptionModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeSimple": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TypeApiDescriptionModel": {
+        "type": "object",
+        "properties": {
+          "baseType": {
+            "type": "string",
+            "nullable": true
+          },
+          "isEnum": {
+            "type": "boolean"
+          },
+          "enumNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "enumValues": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "nullable": true
+          },
+          "genericArguments": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyApiDescriptionModel"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ApplicationApiDescriptionModel": {
+        "type": "object",
+        "properties": {
+          "modules": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ModuleApiDescriptionModel"
+            },
+            "nullable": true
+          },
+          "types": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TypeApiDescriptionModel"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "RemoteServiceValidationErrorInfo": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "RemoteServiceErrorInfo": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "details": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            },
+            "nullable": true
+          },
+          "validationErrors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RemoteServiceValidationErrorInfo"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "LanguageInfo": {
+        "type": "object",
+        "properties": {
+          "cultureName": {
+            "type": "string",
+            "nullable": true
+          },
+          "uiCultureName": {
+            "type": "string",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "flagIcon": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "DateTimeFormatDto": {
+        "type": "object",
+        "properties": {
+          "calendarAlgorithmType": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateTimeFormatLong": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortDatePattern": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullDateTimePattern": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateSeparator": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortTimePattern": {
+            "type": "string",
+            "nullable": true
+          },
+          "longTimePattern": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CurrentCultureDto": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "englishName": {
+            "type": "string",
+            "nullable": true
+          },
+          "threeLetterIsoLanguageName": {
+            "type": "string",
+            "nullable": true
+          },
+          "twoLetterIsoLanguageName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isRightToLeft": {
+            "type": "boolean"
+          },
+          "cultureName": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "nativeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateTimeFormat": {
+            "$ref": "#/components/schemas/DateTimeFormatDto"
+          }
+        }
+      },
+      "NameValue": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ApplicationLocalizationConfigurationDto": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "nullable": true
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LanguageInfo"
+            },
+            "nullable": true
+          },
+          "currentCulture": {
+            "$ref": "#/components/schemas/CurrentCultureDto"
+          },
+          "defaultResourceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "languagesMap": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NameValue"
+              }
+            },
+            "nullable": true
+          },
+          "languageFilesMap": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NameValue"
+              }
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ApplicationAuthConfigurationDto": {
+        "type": "object",
+        "properties": {
+          "policies": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "nullable": true
+          },
+          "grantedPolicies": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ApplicationSettingConfigurationDto": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "CurrentUserDto": {
+        "type": "object",
+        "properties": {
+          "isAuthenticated": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "tenantId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailVerified": {
+            "type": "boolean"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumberVerified": {
+            "type": "boolean"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ApplicationFeatureConfigurationDto": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "MultiTenancyInfoDto": {
+        "type": "object",
+        "properties": {
+          "isEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CurrentTenantDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "isAvailable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "IanaTimeZone": {
+        "type": "object",
+        "properties": {
+          "timeZoneName": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "WindowsTimeZone": {
+        "type": "object",
+        "properties": {
+          "timeZoneId": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TimeZone": {
+        "type": "object",
+        "properties": {
+          "iana": {
+            "$ref": "#/components/schemas/IanaTimeZone"
+          },
+          "windows": {
+            "$ref": "#/components/schemas/WindowsTimeZone"
+          }
+        }
+      },
+      "TimingDto": {
+        "type": "object",
+        "properties": {
+          "timeZone": {
+            "$ref": "#/components/schemas/TimeZone"
+          }
+        }
+      },
+      "ClockDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "LocalizableStringDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "resource": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ExtensionPropertyApiGetDto": {
+        "type": "object",
+        "properties": {
+          "isAvailable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ExtensionPropertyApiCreateDto": {
+        "type": "object",
+        "properties": {
+          "isAvailable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ExtensionPropertyApiUpdateDto": {
+        "type": "object",
+        "properties": {
+          "isAvailable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ExtensionPropertyApiDto": {
+        "type": "object",
+        "properties": {
+          "onGet": {
+            "$ref": "#/components/schemas/ExtensionPropertyApiGetDto"
+          },
+          "onCreate": {
+            "$ref": "#/components/schemas/ExtensionPropertyApiCreateDto"
+          },
+          "onUpdate": {
+            "$ref": "#/components/schemas/ExtensionPropertyApiUpdateDto"
+          }
+        }
+      },
+      "ExtensionPropertyUiTableDto": {
+        "type": "object",
+        "properties": {
+          "isVisible": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ExtensionPropertyUiFormDto": {
+        "type": "object",
+        "properties": {
+          "isVisible": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ExtensionPropertyUiDto": {
+        "type": "object",
+        "properties": {
+          "onTable": {
+            "$ref": "#/components/schemas/ExtensionPropertyUiTableDto"
+          },
+          "onCreateForm": {
+            "$ref": "#/components/schemas/ExtensionPropertyUiFormDto"
+          },
+          "onEditForm": {
+            "$ref": "#/components/schemas/ExtensionPropertyUiFormDto"
+          }
+        }
+      },
+      "ExtensionPropertyAttributeDto": {
+        "type": "object",
+        "properties": {
+          "typeSimple": {
+            "type": "string",
+            "nullable": true
+          },
+          "config": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ExtensionPropertyDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeSimple": {
+            "type": "string",
+            "nullable": true
+          },
+          "displayName": {
+            "$ref": "#/components/schemas/LocalizableStringDto"
+          },
+          "api": {
+            "$ref": "#/components/schemas/ExtensionPropertyApiDto"
+          },
+          "ui": {
+            "$ref": "#/components/schemas/ExtensionPropertyUiDto"
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExtensionPropertyAttributeDto"
+            },
+            "nullable": true
+          },
+          "configuration": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            },
+            "nullable": true
+          },
+          "defaultValue": {
+            "type": "object",
+            "nullable": true
+          }
+        }
+      },
+      "EntityExtensionDto": {
+        "type": "object",
+        "properties": {
+          "properties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ExtensionPropertyDto"
+            },
+            "nullable": true
+          },
+          "configuration": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ModuleExtensionDto": {
+        "type": "object",
+        "properties": {
+          "entities": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/EntityExtensionDto"
+            },
+            "nullable": true
+          },
+          "configuration": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ExtensionEnumFieldDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "object",
+            "nullable": true
+          }
+        }
+      },
+      "ExtensionEnumDto": {
+        "type": "object",
+        "properties": {
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExtensionEnumFieldDto"
+            },
+            "nullable": true
+          },
+          "localizationResource": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ObjectExtensionsDto": {
+        "type": "object",
+        "properties": {
+          "modules": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ModuleExtensionDto"
+            },
+            "nullable": true
+          },
+          "enums": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ExtensionEnumDto"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "BillServicesInput": {
+        "required": [
+          "code",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Service Code",
+            "format": "uuid"
+          },
+          "description": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string",
+            "description": "Bill service description",
+            "nullable": true
+          },
+          "id": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Unique bill service reference number"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Service metadata",
+            "nullable": true
+          }
+        }
+      },
+      "StatusCodes": {
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "details": {
+            "type": "object",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "validationErrors": {
+            "type": "object",
+            "nullable": true
+          }
+        }
+      },
+      "BillServicePricingStrategyOutput": {
+        "type": "object",
+        "properties": {
+          "cost": {
+            "type": "number",
+            "format": "double"
+          },
+          "nameAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameEn": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "BillServicesOutput": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cost": {
+            "type": "number",
+            "format": "double"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameEn": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "pricingStrategies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillServicePricingStrategyOutput"
+            },
+            "description": "Service cost breakdown",
+            "nullable": true
+          },
+          "totalCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "vatCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "vatPercentage": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "CalculateBillCostOutput": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillServicesOutput"
+            },
+            "nullable": true
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "vatAmount": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "CancelBillInput": {
+        "required": [
+          "applicationReference",
+          "billReference"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationReference": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Unique application reference number"
+          },
+          "billReference": {
+            "type": "string",
+            "description": "Unique bill reference number",
+            "format": "uuid"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Cancel reason",
+            "nullable": true
+          }
+        }
+      },
+      "CancelBillOutput": {
+        "type": "object",
+        "properties": {
+          "isCancelled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BillCustomerInput": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "mobileNumber": {
+            "pattern": "^[0-9]{07,20}$",
+            "type": "string",
+            "nullable": true
+          },
+          "vatNumber": {
+            "pattern": "^[0-9]{15}$",
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "BillLanguage": {
+        "enum": [
+          "Ar",
+          "En"
+        ],
+        "type": "string"
+      },
+      "PaymentMethodInput": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "customFields": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "<br>The required custom fields of payment method:\r\n<br>-ThiqahSadad => SadadExpiryDate\r\n<br>-MciSadad => SadadExpiryDate\r\n<br>-SaipSadad => SadadExpiryDate\r\n<br>In case of (ThiqahSadad,MciSadad,SaipSadad) if you didn't send (SadadExpiryDate) we will generate a default one",
+            "nullable": true
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "<br>Payment method name:\r\n<br>Available Online Payment Methods:(ThiqahSadad,CreditCard,ApplePay)\r\n<br>Available Offline Payment Methods:(ThiqahSadad,MciSadad,SaipSadad)"
+          }
+        }
+      },
+      "CreateBillInput": {
+        "required": [
+          "applicationReference",
+          "paymentMethod",
+          "services"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationReference": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Unique application reference number"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/BillCustomerInput"
+          },
+          "supplyDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string",
+            "description": "Bill description",
+            "nullable": true
+          },
+          "language": {
+            "$ref": "#/components/schemas/BillLanguage"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillServicesInput"
+            },
+            "description": "Bill services"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethodInput"
+          }
+        }
+      },
+      "PaymentMethodOutput": {
+        "type": "object",
+        "properties": {
+          "customFields": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Payment method custom fields",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "<br>Payment method name",
+            "nullable": true
+          },
+          "referenceNumber": {
+            "type": "string",
+            "description": "Payment method reference number ex:Sadad Number",
+            "nullable": true
+          }
+        }
+      },
+      "CreateBillOutput": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Total amount of all services without Vat",
+            "format": "double"
+          },
+          "applicationReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "billReference": {
+            "type": "string",
+            "description": "Unique bill reference number",
+            "format": "uuid"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethodOutput"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillServicesOutput"
+            },
+            "description": "Payment services",
+            "nullable": true
+          },
+          "totalAmount": {
+            "type": "number",
+            "description": "Total amount of all services with Vat (Amount + VatAmount)",
+            "format": "double"
+          },
+          "vatAmount": {
+            "type": "number",
+            "description": "Total vat amount of all services",
+            "format": "double"
+          }
+        }
+      },
+      "CreateBillRequestInput": {
+        "required": [
+          "applicationReference",
+          "services"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationReference": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Unique application reference number"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/BillCustomerInput"
+          },
+          "description": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string",
+            "description": "Bill description",
+            "nullable": true
+          },
+          "language": {
+            "$ref": "#/components/schemas/BillLanguage"
+          },
+          "paymentMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentMethodInput"
+            },
+            "description": "Payment methods",
+            "nullable": true
+          },
+          "requestExpiry": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "supplyDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillServicesInput"
+            },
+            "description": "Bill services"
+          }
+        }
+      },
+      "CreateBillRequestOutput": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Total amount of all services without Vat",
+            "format": "double"
+          },
+          "applicationReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "billReference": {
+            "type": "string",
+            "description": "Unique bill reference number",
+            "format": "uuid"
+          },
+          "requestExpiry": {
+            "type": "string",
+            "description": "The expiry date of the bill request in case the customer didn't choose a payment method",
+            "format": "date-time"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillServicesOutput"
+            },
+            "description": "Payment services",
+            "nullable": true
+          },
+          "totalAmount": {
+            "type": "number",
+            "description": "Total amount of all services with Vat (Amount + VatAmount)",
+            "format": "double"
+          },
+          "vatAmount": {
+            "type": "number",
+            "description": "Total vat amount of all services",
+            "format": "double"
+          }
+        }
+      },
+      "GetBillDetailOutput": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "billReference": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "requestExpiry": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "supplyDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethodOutput"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillServicesOutput"
+            },
+            "nullable": true
+          },
+          "customer": {
+            "$ref": "#/components/schemas/BillCustomerInput"
+          },
+          "status": {
+            "type": "string",
+            "description": "[ AwaitingPayment, Paid, Expired, Cancelled ]",
+            "nullable": true
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "url": {
+            "type": "string",
+            "description": "Bill PDF Url",
+            "nullable": true
+          },
+          "vatAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalRefundedAmount": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "RefundBillServiceInput": {
+        "required": [
+          "id",
+          "refundAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "refundAmount": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "RefundBillInput": {
+        "required": [
+          "applicationReference",
+          "billReference",
+          "reason",
+          "services"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationReference": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "billReference": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RefundBillServiceInput"
+            }
+          }
+        }
+      },
+      "RefundBillServiceOutput": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestedRefundAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "administrationFeesAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "refundAmount": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "RefundBillOutput": {
+        "type": "object",
+        "properties": {
+          "administrationFeesAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "providerFeesAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "refundReference": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "requestedRefundAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RefundBillServiceOutput"
+            },
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalRefundAmount": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "ValidationBillGenerationInput": {
+        "required": [
+          "applicationReference",
+          "services"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationReference": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Unique application reference number"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/BillCustomerInput"
+          },
+          "description": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string",
+            "description": "Bill description",
+            "nullable": true
+          },
+          "language": {
+            "$ref": "#/components/schemas/BillLanguage"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillServicesInput"
+            },
+            "description": "Bill services"
+          },
+          "supplyDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "ValidationBillGenerationOutput": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BillWebHookEventOutput": {
+        "type": "object",
+        "properties": {
+          "applicationReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "billReference": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "webHookEventId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "webHookEventName": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isSucceeded": {
+            "type": "boolean"
+          },
+          "isResendable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ApplicationDto": {
+        "type": "object",
+        "properties": {
+          "availablePaymentMethods": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "logoPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameEn": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "BillCustomerInfoOutput": {
+        "type": "object",
+        "properties": {
+          "additionalNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "billCustomerInfoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "buildingNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "neighborhood": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "nullable": true
+          },
+          "taxable": {
+            "type": "boolean"
+          },
+          "vatNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PaymentMethodDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "billerNameAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "billerNameEn": {
+            "type": "string",
+            "nullable": true
+          },
+          "billerNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "BillRefundRequestOutput": {
+        "type": "object",
+        "properties": {
+          "referenceNumber": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "totalRefundedAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "refundDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "BillStatusEnum": {
+        "enum": [
+          "Created",
+          "Submitted",
+          "Paid",
+          "Expired",
+          "Cancelled",
+          "Refunded"
+        ],
+        "type": "string"
+      },
+      "TermsAndConditionsOutput": {
+        "type": "object",
+        "properties": {
+          "termsAndConditionsAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "termsAndConditionsEn": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CreatePaymentMethodInput": {
+        "required": [
+          "isSadad",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "customFields": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "<br>The required custom fields of payment method:\r\n<br>-ThiqahSadad => Null\r\n<br>-CreditCard=>Language:(ar,en)\r\n<br>-Olp=> Language:(ar,en) , OlpIdAlias:string",
+            "nullable": true
+          },
+          "isSadad": {
+            "type": "boolean"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "<br>Payment method name:\r\n<br>Available Payment Methods:(ThiqahSadad,CreditCard,Olp)"
+          }
+        }
+      },
+      "CreatePaymentMethodOutput": {
+        "type": "object",
+        "properties": {
+          "billerNameAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "billerNameEn": {
+            "type": "string",
+            "nullable": true
+          },
+          "billerNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "customFields": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "referenceNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CreateBillCustomerInfoInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "vatNumber": {
+            "maxLength": 15,
+            "minLength": 0,
+            "pattern": "^[0-9]{15}$",
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "neighborhood": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "street": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "buildingNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "additionalNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "city": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "taxable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UpdateBillCustomerInfoInput": {
+        "required": [
+          "billCustomerInfo",
+          "billReference"
+        ],
+        "type": "object",
+        "properties": {
+          "billReference": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "billCustomerInfo": {
+            "$ref": "#/components/schemas/CreateBillCustomerInfoInput"
+          }
+        }
+      },
+      "UpdateBillCustomerInfoOutput": {
+        "type": "object",
+        "properties": {
+          "isSucceeded": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RefundRequestNotification": {
+        "type": "object",
+        "properties": {
+          "isRefunded": {
+            "type": "boolean"
+          },
+          "referenceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "refundId": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "oAuth2ClientCredentials": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://payment.test.thiqah.sa/v4/billmanager/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  }
+}
