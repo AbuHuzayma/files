@@ -431,6 +431,42 @@
         }
       }
     },
+    "/api/AsyncCallback/MsegatCallback": {
+      "post": {
+        "tags": [
+          "AsyncCallback"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MsegatSendSmsResponse"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MsegatSendSmsResponse"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MsegatSendSmsResponse"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MsegatSendSmsResponse"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/v{version}/Mail/send": {
       "post": {
         "tags": [
@@ -519,7 +555,7 @@
         }
       }
     },
-    "/api/Request/CreateRequest": {
+    "/api/Request/CreateRequestPayment": {
       "post": {
         "tags": [
           "Request"
@@ -544,6 +580,42 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateRequestCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Request/CreateRequestDraft": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequestDraftCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequestDraftCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequestDraftCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequestDraftCommand"
               }
             }
           }
@@ -591,6 +663,114 @@
         }
       }
     },
+    "/api/Request/DeleteRequest": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteRequestCommand"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteRequestCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteRequestCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteRequestCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Request/GetNotificationTemplateById": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateByIdQuery"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateByIdQuery"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateByIdQuery"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateByIdQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Request/GetNotificationTemplate": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateQuery"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateQuery"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateQuery"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Request/GetUserRequests": {
       "get": {
         "tags": [
@@ -602,6 +782,14 @@
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "IdentityType",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
@@ -628,6 +816,147 @@
           },
           {
             "name": "userIdentityNo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Request/ConfirmPayment": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateQuery"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateQuery"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateQuery"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNotificationTemplateQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Upg/webhook/confirm": {
+      "post": {
+        "tags": [
+          "Upg"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Upg/GeneratePaymentRequest": {
+      "get": {
+        "tags": [
+          "Upg"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Upg/GetBillDetails": {
+      "get": {
+        "tags": [
+          "Upg"
+        ],
+        "parameters": [
+          {
+            "name": "applicationReference",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Upg/DownloadBill": {
+      "get": {
+        "tags": [
+          "Upg"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Upg/GetBillServiceCost": {
+      "get": {
+        "tags": [
+          "Upg"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nId",
             "in": "query",
             "schema": {
               "type": "string"
@@ -720,10 +1049,6 @@
           "requestId": {
             "type": "integer",
             "format": "int32"
-          },
-          "billAmount": {
-            "type": "number",
-            "format": "double"
           }
         },
         "additionalProperties": false
@@ -923,6 +1248,106 @@
         },
         "additionalProperties": false
       },
+      "CreateRequestDraftCommand": {
+        "type": "object",
+        "properties": {
+          "userNID": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "requestTypeId": {
+            "$ref": "#/components/schemas/EnumRequestTypes"
+          },
+          "requestStatusId": {
+            "$ref": "#/components/schemas/EnumRequestStatus"
+          },
+          "fulfilmentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fulfillmentAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "paymentCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "paymentNo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "paidAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "remainingAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "isReportedToPerson": {
+            "type": "boolean"
+          },
+          "claimantPartyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "claimantIdentityTypeId": {
+            "$ref": "#/components/schemas/EnumIdentityTypes"
+          },
+          "claimantIdentityNo": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "delegatedNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "delegatedCRorNID": {
+            "type": "string",
+            "nullable": true
+          },
+          "notificationChannelType": {
+            "$ref": "#/components/schemas/EnumNotificationChannels"
+          },
+          "notifyChannelAbsher": {
+            "type": "string",
+            "nullable": true
+          },
+          "notifyChannelCR": {
+            "type": "string",
+            "nullable": true
+          },
+          "notifyChannelMobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "notifyChannelEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestAttachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateRequestAttachmentDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateUserProfileCommand": {
         "type": "object",
         "properties": {
@@ -949,6 +1374,16 @@
           "phoneNumber": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteRequestCommand": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -993,6 +1428,74 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "GetNotificationTemplateByIdQuery": {
+        "type": "object",
+        "properties": {
+          "templateId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "templateKeys": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetNotificationTemplateQuery": {
+        "type": "object",
+        "properties": {
+          "fulfilmentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fulfillmentAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "claimantPartyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "notificationChannelType": {
+            "$ref": "#/components/schemas/EnumNotificationChannels"
+          },
+          "notifyChannelAbsher": {
+            "type": "string",
+            "nullable": true
+          },
+          "notifyChannelCR": {
+            "type": "string",
+            "nullable": true
+          },
+          "notifyChannelMobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "notifyChannelEmail": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MsegatSendSmsResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "NotificationResponse": {
         "type": "object",
